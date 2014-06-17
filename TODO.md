@@ -11,4 +11,5 @@ GuessBuilder? - perform validation on guess input
       correct length (by difficulty)
       characters, not numbers or symbols
   - if guess is incorrect, provide message and reprompt user
-  
+
+Build REPL - communicates with Game which interfaces with rest of program

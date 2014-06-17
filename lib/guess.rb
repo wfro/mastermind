@@ -5,12 +5,12 @@
 
 class Guess
 
-  attr_reader :input, :timestamp, :turn_number
+  attr_reader :input, :timestamp, :turn
 
-  def initialize(input, timestamp, turn_number)
+  def initialize(input, timestamp, turn)
     @input = input
     @timestamp = timestamp
-    @turn_number = turn_number
+    @turn = turn
   end
-  
+
 end
