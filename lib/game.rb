@@ -21,24 +21,6 @@ class Game
     @guesses << guess
   end
 
-  def start
   
-  end
-
-
-  def menu
-    # quit, play, instructions
-    puts "Intro message placeholder"
-    command = ''
-    while command != 'q'
-      # get input and
-      command = gets.chomp
-      case command
-      when 'q' then puts "Goodbye.  Make this clever eventually."
-      when 'p' then # start game loop
-      when 'i' then instructions
-      end
-    end
-  end
 
 end
