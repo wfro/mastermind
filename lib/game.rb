@@ -13,35 +13,46 @@ require './lib/guess_printer'
 
 class Game
 
-  attr_reader :total_turns
+  attr_reader :total_turns, :guesses
 
   def initialize
     @guesses = []
     @total_turns = @guesses.length + 1
     @start_time = Time.now
+    @end_time = ''
     @answer = SequenceGenerator.random_sequence
+    @game_over = false
   end
 
   def play
-    # Bulk of logic for actually running the game
     puts "I have generated a beginner sequence with four elements made up of:"
     puts "(r)ed, (g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game."
     puts "What's your guess?"
 
     keep_running = true
+    puts "Answer = #{@answer.secret_sequence}"
+
     while keep_running
-      puts "new_game loop"
+      puts "Top of game loop"
       user_sequence = gets.chomp.to_s
       current_guess = guess(user_sequence)
-      if current_guess.valid?
-        match_data = match(current_guess), @answer)
+
+      # check if user input passed validation and Guess was insantiated
+      if current_guess
+        match_data = match(current_guess, @answer)
         if match_data.full_match?
-          pass
+          @end_time = Time.now
+          keep_running = false
+          exit_message
         else
           print_results(match_data)
+          @guesses << current_guess
+          puts "Try again."
+          print "> "
         end
       end
     end
+
   end
 
   def guess(input)
@@ -57,16 +68,15 @@ class Game
     gp.print_output
   end
 
-  def guesses
-    @guesses
+  def exit_message
+    @game_over = true
+    total_time = @start_time = @end_time
+    puts "total time #{total_time}"
+    puts 'win'
   end
 
-  def <<(guess)
-    @guesses << guess
-  end
-
-  def exit(result)
-    # if result == 'win'
+  def game_over?
+    @game_over
   end
 
 end

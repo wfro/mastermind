@@ -5,25 +5,30 @@ require './lib/game'
 
 class CLI
 
-  def instructions
-    "guess a sequence of n characters"
+  def self.instructions
+    puts "put some instructions here"
+    print "> "
   end
 
 
   def self.menu
-    # quit, play, instructions
-    puts "Intro message placeholder"
+    puts "Welcome to MASTERMIND"
+    puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+    print "> "
+
+    game = Game.new
     command = ''
-    while command != 'q' || command != 'p'
-      # get input and
+    while command != 'q'
+      puts "Top of menu loop"
+      break if game.game_over?
+
       command = gets.chomp
 
       case command
-      when 'q' then puts "Bye."
-      when 'p' then Game.new.play
-      when 'i' then instructions
-      else
-        puts "I don't recognize that command."
+        when 'q' then puts "Bye."
+        when 'p' then game.play
+        when 'i' then instructions
+        else puts "I don't recognize that command."
       end
     end
   end
