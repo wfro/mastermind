@@ -1,7 +1,3 @@
-# SequqenceMatcher data needs to get here somehow
-#   correct_content
-#   correct_position
-#   win?
 
 
 class GuessPrinter

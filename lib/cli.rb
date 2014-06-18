@@ -1,33 +1,36 @@
+# Main entry point currently.  Presents a simple menu to the user
+# and creates an instance of Game should us.
+
+require './lib/game'
+
 class CLI
-  def validate_input(command)
-    if command.length < 4
-      puts "Your guess is too short!  Guesses must be exactly 4 characters."
-    elsif command.length > 4
-      puts "Your guess is too long!  Guesses must be exactly 4 characters."
-    end
-  end
 
   def instructions
-    
+    "guess a sequence of n characters"
   end
+
 
   def self.menu
     # quit, play, instructions
     puts "Intro message placeholder"
     command = ''
-    while command != 'q'
+    while command != 'q' || command != 'p'
       # get input and
       command = gets.chomp
-      validate_input(command)
 
       case command
-      when 'q' then puts "Goodbye.  Make this clever eventually."
-      when 'p' then # new game
-      when 'i' then # instructions
+      when 'q' then puts "Bye."
+      when 'p' then Game.new.play
+      when 'i' then instructions
+      else
+        puts "I don't recognize that command."
       end
     end
   end
 
   def self.run
   end
+
 end
+
+CLI.menu

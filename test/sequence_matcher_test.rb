@@ -16,7 +16,7 @@
 #   def test_guess_has_correct_content
 #     # hardcoded answer here for testing purposes
 #
-#     matcher = SequenceMatcher.new(GuessBuilder.new("rrgr").new_guess, SequenceGenerator.random_sequence)
+#     matcher = SequenceMatcher.new(GuessBuilder.new.new_guess("rrgr"), SequenceGenerator.random_sequence)
 #     answer = matcher.
 #     assert_equal 2, matcher.correct_content
 #   end

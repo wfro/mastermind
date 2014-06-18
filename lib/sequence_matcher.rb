@@ -36,7 +36,7 @@ class SequenceMatcher
 
   def initialize(guess, answer)
     # guess/answer are both passed in as objects
-    @guess = guess.input
+    @guess = guess.sequence
     @answer = answer.secret_sequence
     @full_match = false
   end

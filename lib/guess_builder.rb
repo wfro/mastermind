@@ -1,15 +1,13 @@
 require './lib/guess'
 
 class GuessBuilder
-  def initialize(guess)
-    @guess = guess # string at this point
-  end
-
-  def new_guess
-    # can we create the Guess objects in initialize?
-    guess = @guess.downcase.split("")
-    timestamp = Time.now
-    turn = 0 # placeholder for now
-    Guess.new(guess, timestamp, turn)
+  def new_guess(sequence)
+    sequence = sequence.downcase.split("")
+    guess = Guess.new(sequence, Time.now)
+    if guess.valid?
+      return guess
+    else
+      puts "Not a valid guess"
+    end
   end
 end
