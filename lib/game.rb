@@ -29,12 +29,17 @@ class Game
     puts "(r)ed, (g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game."
     puts "What's your guess?"
 
-    keep_running = true
     puts "Answer = #{@answer.secret_sequence}"
 
+    keep_running = true
     while keep_running
       puts "Top of game loop"
       user_sequence = gets.chomp.to_s
+      if user_sequence == 'q'
+        @game_over = true
+        break
+      end
+      
       current_guess = guess(user_sequence)
 
       # check if user input passed validation and Guess was insantiated
