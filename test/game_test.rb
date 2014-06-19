@@ -26,4 +26,13 @@ class GameTest < Minitest::Test
     assert_equal 1, game.total_turns
   end
 
+  def test_initializes_beginner_difficulty_by_default
+    game = Game.new
+    assert_equal 4, answer.secret_sequence.length
+  end
+
+  def test_initializes_correct_difficulty
+    skip
+  end
+
 end

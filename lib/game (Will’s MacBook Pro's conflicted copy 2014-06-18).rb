@@ -6,14 +6,18 @@ require './lib/guess_printer'
 
 class Game
 
-  attr_reader :total_turns, :guesses
+  attr_reader :total_turns, :guesses, :answer
 
-  def initialize
+  def initialize(difficulty='beginner')
+    @difficulty  = difficulty
     @guesses     = []
     @start_time  = ''
     @end_time    = ''
-    @answer      = SequenceGenerator.new.random_sequence
+    @answer      = SequenceGenerator.new(@difficulty).random_sequence
+    @game_over   = false
   end
+
+
 
   def play
     @start_time = Time.now
@@ -26,16 +30,12 @@ class Game
     keep_running = true
 
     while keep_running
-      if total_turns > 2
-        print_end_game_output('loss')
-        break
-      end
 
       user_sequence = gets.chomp.to_s
       if user_sequence == 'q'
+        @game_over = true
         end_time
-        puts "You guessed #{total_turns} times over a period of #{total_time} seconds."
-        abort # mission
+        break
       end
 
       current_guess = guess(user_sequence)
@@ -43,7 +43,10 @@ class Game
       if current_guess # check if input was valid and Guess instance was created
         match_data = match(current_guess, @answer)
         if match_data.full_match?
-          print_end_game_output('win')
+          end_time
+          keep_running = false
+          win_message
+          reprompt
         else
           print_results(match_data)
           @guesses << current_guess
@@ -53,18 +56,14 @@ class Game
         end
       end
 
-
+      if total_turns > 1
+        @game_over = true
+        end_time
+        loss_message
+        reprompt
+        break
+      end
     end
-  end
-
-  def print_end_game_output(outcome)
-    end_time
-    if outcome == 'win'
-      win_message
-    elsif outcome =='loss'
-      loss_message
-    end
-    reprompt
   end
 
   def num_turns
@@ -112,7 +111,11 @@ class Game
 
   def reprompt
     puts "Do you want to (p)lay again or (q)uit?"
-    print "> "
+    puts "> "
+  end
+
+  def game_over?
+    @game_over
   end
 
 end

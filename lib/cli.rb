@@ -1,5 +1,4 @@
-# Main entry point currently.  Presents a simple menu to the user
-# and creates an instance of Game should us.
+# Main entry point
 
 require './lib/game'
 
@@ -30,12 +29,11 @@ class CLI
     game = Game.new
     command = ''
     while command != 'q'
-      break if game.game_over?
-
       command = gets.chomp
 
       case command
         when 'p' then game.play
+        when 'q' then break # handles coming back from main game loop.  better way?
         when 'i' then instructions
         else
           puts "I don't recognize that command."
