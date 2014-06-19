@@ -18,13 +18,14 @@ class Game
   def initialize
     @guesses = []
     @total_turns = @guesses.length + 1
-    @start_time = Time.now
+    @start_time = ''
     @end_time = ''
     @answer = SequenceGenerator.random_sequence
     @game_over = false
   end
 
   def play
+    @start_time = Time.now
     puts "I have generated a beginner sequence with four elements made up of:"
     puts "(r)ed, (g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game."
     puts "What's your guess?"
@@ -32,14 +33,19 @@ class Game
     puts "Answer = #{@answer.secret_sequence}"
 
     keep_running = true
+
     while keep_running
-      puts "Top of game loop"
+      if @total_turns > 20
+        loss_message
+        break
+      end
+
       user_sequence = gets.chomp.to_s
       if user_sequence == 'q'
         @game_over = true
         break
       end
-      
+
       current_guess = guess(user_sequence)
 
       # check if user input passed validation and Guess was insantiated
@@ -48,16 +54,24 @@ class Game
         if match_data.full_match?
           @end_time = Time.now
           keep_running = false
-          exit_message
+          win_message
         else
           print_results(match_data)
           @guesses << current_guess
+          num_turns
           puts "Try again."
           print "> "
         end
       end
     end
+  end
 
+  def num_turns
+    if @guesses.length == 1
+      puts "You've taken #{@guesses.length} guess."
+    else
+      puts "You've taken #{@guesses.length} guesses."
+    end
   end
 
   def guess(input)
@@ -73,11 +87,15 @@ class Game
     gp.print_output
   end
 
-  def exit_message
-    @game_over = true
-    total_time = @start_time = @end_time
-    puts "total time #{total_time}"
-    puts 'win'
+  def loss_message
+
+  end
+  
+  def win_message
+    total_time = @end_time - @start_time
+    puts "Congratulations! You guessed the sequence #{answer.secret_sequence} in"
+    puts "#{@guesses.length} guesses over #{total_time} seconds."
+    puts "Do you want to (p)lay again or (q)uit?"
   end
 
   def game_over?

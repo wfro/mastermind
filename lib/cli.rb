@@ -6,7 +6,18 @@ require './lib/game'
 class CLI
 
   def self.instructions
-    puts "put some instructions here"
+    puts "MASTERMIND:"
+    puts
+    puts "\t-- A random sequence of four colors will be generated."
+    puts "\t-- Possible options include (r)ed, (b)lue, (g)reen, and (y)ellow,"
+    puts "\t   and ny combination the four is valid, including duplicates."
+    puts "\t   For example 'rrrr' is a valid code."
+    puts "\t-- Your goal is to correctly guess the randomly generated code"
+    puts "\t   as quickly as possible."
+    puts "\t-- Enter your guess into the console, valid guesses include any and all"
+    puts "\t   combinations of the four colors."
+    puts "\t-- And most importantly, GG no re."
+    puts
     print "> "
   end
 
@@ -19,23 +30,24 @@ class CLI
     game = Game.new
     command = ''
     while command != 'q'
-      puts "Top of menu loop"
       break if game.game_over?
 
       command = gets.chomp
 
       case command
-        when 'q' then puts "Bye."
         when 'p' then game.play
         when 'i' then instructions
-        else puts "I don't recognize that command."
+        else
+          puts "I don't recognize that command."
+          puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+          print "> "
       end
     end
+    puts "Thanks for playing!"
   end
 
   def self.run
+    CLI.menu
   end
 
 end
-
-CLI.menu
