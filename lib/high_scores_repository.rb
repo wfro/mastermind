@@ -1,7 +1,7 @@
 # Handles reading csv data and printing
 
 require 'csv'
-require 'entry'
+require './lib/entry'
 
 class HighScoresRepository
 
