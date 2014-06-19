@@ -3,7 +3,7 @@ require './lib/sequence'
 class SequenceGenerator
   attr_reader :difficulty
 
-  def initialize(difficulty='beginner')
+  def initialize(difficulty='b')
     @difficulty = difficulty.downcase
   end
 
@@ -11,9 +11,9 @@ class SequenceGenerator
     sequence_size = 0
 
     case difficulty
-    when 'beginner' then sequence_size = 4
-    when 'intermediate' then sequence_size = 5
-    when 'expert' then sequence_size = 6
+    when 'b' then sequence_size = 4
+    when 'i' then sequence_size = 5
+    when 'e' then sequence_size = 6
     end
 
     @characters = ['r', 'b', 'g', 'y']

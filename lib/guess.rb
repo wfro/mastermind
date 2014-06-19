@@ -2,11 +2,19 @@ class Guess
 
   attr_reader :sequence, :timestamp
 
-  def initialize(sequence)
+  def initialize(sequence, difficulty='b')
     @sequence = sequence
     @timestamp = timestamp
-    @expected_length = 4
+    @difficulty = difficulty
+  end
+
+  def expected_length
+    case @difficulty
+    when 'b' then return 4
+    when 'i' then return 5
+    when 'e' then return 6
     end
+  end
 
   def expected_chars
     %w(r b g y)
@@ -17,7 +25,7 @@ class Guess
   end
 
   def valid_length?
-    sequence.length == @expected_length
+    sequence.length == expected_length
   end
 
   def valid_chars?

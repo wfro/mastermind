@@ -12,11 +12,13 @@ class CLI
     puts "\t   and any combination the four is valid, including duplicates."
     puts "\t   For example 'rrrr' is a valid code."
     puts "\t-- Your goal is to correctly guess the randomly generated code"
-    puts "\t   as quickly as possible."
+    puts "\t   as quickly as possible, with a maximum of 20 turns."
+    puts "\t   There are 3 difficulty settings: Beginner (default), Intermediate, and Expert."
     puts "\t-- Enter your guess into the console, valid guesses include any and"
     puts "\t   all combinations of the four colors."
     puts "\t-- And most importantly, GG no re."
     puts
+    puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
     print "> "
   end
 
@@ -32,16 +34,28 @@ class CLI
       command = gets.chomp
 
       case command
-        when 'p' then game.play
-        when 'q' then break # handles coming back from main game loop.  better way?
-        when 'i' then instructions
-        else
-          puts "I don't recognize that command."
-          puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
-          print "> "
+      when 'p' then set_difficulty
+      when 'q' then break # handles coming back from main game loop.  better way?
+      when 'i' then instructions
+      else
+        puts "I don't recognize that command."
+        puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+        print "> "
       end
     end
     puts "Thanks for playing!"
+  end
+
+  def self.set_difficulty
+    puts "Choose a difficulty setting: "
+    puts "(b)eginner, (i)ntermediate, or (e)xpert (default is beginner if no option set)"
+    print "> "
+    diff = gets.chomp
+    if diff.empty?
+      Game.new.play
+    else
+      Game.new(diff).play
+    end
   end
 
   def self.run

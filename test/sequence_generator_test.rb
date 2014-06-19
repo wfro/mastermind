@@ -8,9 +8,9 @@ class SequenceGeneratorTest < Minitest::Test
 
   def setup
     @sgdef = SequenceGenerator.new
-    @sgbeg = SequenceGenerator.new('beginner')
-    @sgint = SequenceGenerator.new('intermediate')
-    @sgexp = SequenceGenerator.new('expert')
+    @sgbeg = SequenceGenerator.new('b')
+    @sgint = SequenceGenerator.new('i')
+    @sgexp = SequenceGenerator.new('e')
   end
 
   def test_generates_beginner_random_sequences_by_default

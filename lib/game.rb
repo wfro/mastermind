@@ -8,29 +8,18 @@ class Game
 
   attr_reader :total_turns, :guesses
 
-  def initialize
+  def initialize(difficulty='b')
+    @difficulty  = difficulty
     @guesses     = []
     @start_time  = ''
     @end_time    = ''
-    @answer      = SequenceGenerator.new.random_sequence
+    @answer      = SequenceGenerator.new(difficulty).random_sequence
   end
 
   def play
     @start_time = Time.now
-    puts "I have generated a beginner sequence with four elements made up of:"
-    puts "(r)ed, (g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game."
-    puts "What's your guess?"
-
-    puts "Answer = #{@answer.secret_sequence}"
-
-    keep_running = true
-
-    while keep_running
-      if total_turns > 2
-        print_end_game_output('loss')
-        break
-      end
-
+    intro_message(@difficulty)
+    loop do
       user_sequence = gets.chomp.to_s
       if user_sequence == 'q'
         end_time
@@ -38,12 +27,15 @@ class Game
         abort # mission
       end
 
-      current_guess = guess(user_sequence)
+      current_guess = guess(user_sequence, @difficulty)
 
       if current_guess # check if input was valid and Guess instance was created
         match_data = match(current_guess, @answer)
         if match_data.full_match?
           print_end_game_output('win')
+        elsif total_turns == 19 # on last guess
+          puts "No more guesses!"
+          break
         else
           print_results(match_data)
           @guesses << current_guess
@@ -52,9 +44,8 @@ class Game
           print "> "
         end
       end
-
-
     end
+    print_end_game_output('loss')
   end
 
   def print_end_game_output(outcome)
@@ -75,8 +66,8 @@ class Game
     end
   end
 
-  def guess(input)
-    GuessBuilder.new.new_guess(input)
+  def guess(input, difficulty)
+    GuessBuilder.new.new_guess(input, difficulty)
   end
 
   def match(guess, answer)
@@ -98,6 +89,21 @@ class Game
 
   def total_time
     @end_time - @start_time
+  end
+
+  def intro_message(difficulty)
+    print_diff = ''
+    case difficulty
+    when 'b' then print_diff = 'beginner'
+    when 'i' then print_diff = 'intermediate'
+    when 'e' then print_diff = 'expert'
+    else print_diff = 'beginner'
+    end
+    puts "I have generated a #{print_diff} sequence with four elements made up of:"
+    puts "(r)ed, (g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game."
+    puts "What's your guess?"
+
+    puts "Answer = #{@answer.secret_sequence}"
   end
 
   def loss_message
