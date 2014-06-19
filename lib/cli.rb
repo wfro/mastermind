@@ -6,16 +6,16 @@ require './lib/game'
 class CLI
 
   def self.instructions
-    puts "MASTERMIND:"
+    puts "\nMASTERMIND:"
     puts
     puts "\t-- A random sequence of four colors will be generated."
     puts "\t-- Possible options include (r)ed, (b)lue, (g)reen, and (y)ellow,"
-    puts "\t   and ny combination the four is valid, including duplicates."
+    puts "\t   and any combination the four is valid, including duplicates."
     puts "\t   For example 'rrrr' is a valid code."
     puts "\t-- Your goal is to correctly guess the randomly generated code"
     puts "\t   as quickly as possible."
-    puts "\t-- Enter your guess into the console, valid guesses include any and all"
-    puts "\t   combinations of the four colors."
+    puts "\t-- Enter your guess into the console, valid guesses include any and"
+    puts "\t   all combinations of the four colors."
     puts "\t-- And most importantly, GG no re."
     puts
     print "> "
@@ -23,7 +23,7 @@ class CLI
 
 
   def self.menu
-    puts "Welcome to MASTERMIND"
+    puts "\nWelcome to MASTERMIND"
     puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
     print "> "
 

@@ -1,10 +1,3 @@
-# Store guesses
-# Keep timer
-# Store history (later feature)
-#
-# What else will game do?  Create functions here and decide where to put them
-# Where am I going to create all of the objects and actually execute the code
-
 require './lib/sequence_matcher'
 require './lib/sequence_generator'
 require './lib/guess'
@@ -16,13 +9,14 @@ class Game
   attr_reader :total_turns, :guesses
 
   def initialize
-    @guesses = []
-    @total_turns = @guesses.length + 1
-    @start_time = ''
-    @end_time = ''
-    @answer = SequenceGenerator.random_sequence
-    @game_over = false
+    @guesses     = []
+    @start_time  = ''
+    @end_time    = ''
+    @answer      = SequenceGenerator.random_sequence
+    @game_over   = false
   end
+
+
 
   def play
     @start_time = Time.now
@@ -35,24 +29,20 @@ class Game
     keep_running = true
 
     while keep_running
-      if @total_turns > 20
-        loss_message
-        break
-      end
 
       user_sequence = gets.chomp.to_s
       if user_sequence == 'q'
         @game_over = true
+        end_time
         break
       end
 
       current_guess = guess(user_sequence)
 
-      # check if user input passed validation and Guess was insantiated
-      if current_guess
+      if current_guess # check if input was valid and Guess instance was created
         match_data = match(current_guess, @answer)
         if match_data.full_match?
-          @end_time = Time.now
+          end_time
           keep_running = false
           win_message
         else
@@ -62,6 +52,13 @@ class Game
           puts "Try again."
           print "> "
         end
+      end
+
+      if total_turns > 1
+        end_time
+        loss_message
+        @game_over = true
+        break
       end
     end
   end
@@ -87,15 +84,31 @@ class Game
     gp.print_output
   end
 
-  def loss_message
-
+  def total_turns
+    guesses.length
   end
-  
+
+  def end_time
+    @end_time = Time.now
+  end
+
+  def total_time
+    @end_time - @start_time
+  end
+
+  def loss_message
+    puts "\nSorry, you are out of guesses!"
+    puts "Total time played: #{total_time} seconds"
+  end
+
   def win_message
-    total_time = @end_time - @start_time
-    puts "Congratulations! You guessed the sequence #{answer.secret_sequence} in"
+    puts "\nCongratulations! You guessed the sequence #{@answer.secret_sequence} in"
     puts "#{@guesses.length} guesses over #{total_time} seconds."
+  end
+
+  def re_prompt
     puts "Do you want to (p)lay again or (q)uit?"
+    puts "> "
   end
 
   def game_over?
