@@ -6,9 +6,6 @@ require './lib/entry'
 class HighScoresRepository
 
   attr_reader :rows
-  def initialize(rows)
-    @rows = rows
-  end
 
   def self.in(dir)
     file = File.join(dir, 'high_scores.csv')

@@ -18,13 +18,15 @@ class Game
   def history
     puts "Guess History:\n"
     print "Guess:   "
+
     guesses.each do |i|
+      guess_spacing = i.sequence.join("")
       print i.sequence.join("") + " "
     end
     puts ""
-    print "Turn #:   "
+    print "Turn #:    "
     1.upto(total_turns) do |i|
-      print i.to_s + "   "
+      print i.to_s + "         "
     end
     puts ""
   end
@@ -40,6 +42,8 @@ class Game
         abort # mission
       elsif user_sequence == 'history'
         history
+        print "> "
+        redo
       end
 
       current_guess = guess(user_sequence, @difficulty)
@@ -48,6 +52,7 @@ class Game
         match_data = match(current_guess, @answer)
         if match_data.full_match?
           print_end_game_output('win')
+          break
         elsif total_turns == 19 # on last guess
           puts "No more guesses!"
           break

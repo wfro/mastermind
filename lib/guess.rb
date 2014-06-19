@@ -18,7 +18,7 @@ class Guess
   end
 
   def expected_chars(n)
-    possible = %w(r g b y o p)
+    possible = %w[r b g y o p]
     n.times do |i|
       @expected << possible[i]
     end
