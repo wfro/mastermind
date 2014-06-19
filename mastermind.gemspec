@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "A clone of the board game Mastermind with a simple CLI"
   s.authors     = ["Will Faurot"]
   s.email       = 'wfaurot@gmail.com'
-  s.files       = ["lib/mastermind.rb"]
+  s.files       = ["mastermind.rb"]
   s.homepage    = 'http://github.com/wfro'
   s.license     = 'MIT'
 end

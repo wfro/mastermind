@@ -7,13 +7,26 @@ require './lib/guess_printer'
 class Game
 
   attr_reader :total_turns, :guesses
-
   def initialize(difficulty='b')
     @difficulty  = difficulty
     @guesses     = []
     @start_time  = ''
     @end_time    = ''
     @answer      = SequenceGenerator.new(difficulty).random_sequence
+  end
+
+  def history
+    puts "Guess History:\n"
+    print "Guess:   "
+    guesses.each do |i|
+      print i.sequence.join("") + " "
+    end
+    puts ""
+    print "Turn #:   "
+    1.upto(total_turns) do |i|
+      print i.to_s + "   "
+    end
+    puts ""
   end
 
   def play
@@ -25,6 +38,8 @@ class Game
         end_time
         puts "You guessed #{total_turns} times over a period of #{total_time} seconds."
         abort # mission
+      elsif user_sequence == 'history'
+        history
       end
 
       current_guess = guess(user_sequence, @difficulty)
@@ -93,14 +108,27 @@ class Game
 
   def intro_message(difficulty)
     print_diff = ''
+    colors = ''
+    len = 4
     case difficulty
-    when 'b' then print_diff = 'beginner'
-    when 'i' then print_diff = 'intermediate'
-    when 'e' then print_diff = 'expert'
-    else print_diff = 'beginner'
+    when 'b'
+      print_diff = 'beginner'
+      colors     = "(r)ed, (g)reen, (b)lue, and (y)ellow"
+    when 'i'
+      print_diff = 'intermediate'
+      colors     = "(r)ed, (g)reen, (b)lue, (y)ellow, and (o)range."
+      len = 5
+    when 'e'
+      print_diff = 'expert'
+      colors     = "(r)ed, (g)reen, (b)lue, (y)ellow, (o)range, and (p)urple."
+      len = 6
+    else
+      print_diff = 'beginner'
+      "(r)ed, (g)reen, (b)lue, and (y)ellow"
     end
-    puts "I have generated a #{print_diff} sequence with four elements made up of:"
-    puts "(r)ed, (g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game."
+
+    puts "I have generated a #{print_diff} sequence with #{len} elements made up of:"
+    puts "#{colors}. Use (q)uit at any time to end the game."
     puts "What's your guess?"
 
     puts "Answer = #{@answer.secret_sequence}"
@@ -112,7 +140,7 @@ class Game
   end
 
   def win_message
-    puts "\nCongratulations! You guessed the sequence #{@answer.secret_sequence} in"
+    puts "\nCongratulations! You guessed the sequence #{@answer.secret_sequence.join("")} in"
     puts "#{@guesses.length} guesses over #{total_time} seconds."
   end
 

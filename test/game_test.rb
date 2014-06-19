@@ -21,9 +21,23 @@ class GameTest < Minitest::Test
     assert_equal 1, game.guesses.length
   end
 
-  # def test_initializes_beginner_difficulty_by_default
+  def test_initializes_beginner_difficulty_by_default
+    # issues with exposing  answer from Game?
+    skip
+    game = Game.new
+    assert_equal 4, answer.secret_sequence.length
+  end
+
+  def test_history_exists
+    game = Game.new
+    game.history
+  end
+
+
+  # figure out how to test cosole output
+  # def test_history_prints_guess_history
   #   game = Game.new
-  #   assert_equal 4, answer.secret_sequence.length
+  #   game.history
   # end
 
 end

@@ -8,17 +8,16 @@ class SequenceGenerator
   end
 
   def random_sequence
-    sequence_size = 0
+    @characters = ['r', 'b', 'g', 'y']
+    length = 4
 
     case difficulty
-    when 'b' then sequence_size = 4
-    when 'i' then sequence_size = 5
-    when 'e' then sequence_size = 6
+    when 'i' then @characters << 'o'; length = 6 # orange
+    when 'e' then @characters << 'p'; length = 8  # purple
     end
 
-    @characters = ['r', 'b', 'g', 'y']
     sequence = []
-    sequence_size.times do |i|
+    length.times do |i|
       sequence[i] = @characters[(rand(0...@characters.length))]
     end
     Sequence.new(sequence)

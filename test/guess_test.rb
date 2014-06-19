@@ -38,12 +38,12 @@ class GuessTest < Minitest::Test
   end
 
   def test_an_intermediate_code
-    guess = Guess.new(%w(r b g r b), 'i')
+    guess = Guess.new(%w(r b g r b o), 'i')
     assert guess.valid?
   end
 
   def test_an_expert_code
-    guess = Guess.new(%w(r b g r b r), 'e')
+    guess = Guess.new(%w(r b g r o p o p), 'e')
     assert guess.valid?
   end
 

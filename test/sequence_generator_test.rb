@@ -32,11 +32,11 @@ class SequenceGeneratorTest < Minitest::Test
 
   def test_generate_intermediate_sequence
     sequence = @sgint.random_sequence
-    assert_equal 5, sequence.secret_sequence.size
+    assert_equal 6, sequence.secret_sequence.size
   end
 
   def test_generate_expert_sequence
     sequence = @sgexp.random_sequence
-    assert_equal 6, sequence.secret_sequence.size
+    assert_equal 8, sequence.secret_sequence.size
   end
 end
