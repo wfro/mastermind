@@ -33,11 +33,4 @@ class GameTest < Minitest::Test
     game.history
   end
 
-
-  # figure out how to test cosole output
-  # def test_history_prints_guess_history
-  #   game = Game.new
-  #   game.history
-  # end
-
 end
