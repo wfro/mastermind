@@ -45,6 +45,7 @@ class Game
           end_time
           keep_running = false
           win_message
+          reprompt
         else
           print_results(match_data)
           @guesses << current_guess
@@ -55,9 +56,10 @@ class Game
       end
 
       if total_turns > 1
+        @game_over = true
         end_time
         loss_message
-        @game_over = true
+        reprompt
         break
       end
     end
@@ -106,7 +108,7 @@ class Game
     puts "#{@guesses.length} guesses over #{total_time} seconds."
   end
 
-  def re_prompt
+  def reprompt
     puts "Do you want to (p)lay again or (q)uit?"
     puts "> "
   end
